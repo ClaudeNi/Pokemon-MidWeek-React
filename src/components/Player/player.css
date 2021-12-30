@@ -8,11 +8,11 @@
     height: calc(var(--grid-cell) * 2); */
     position: absolute;
     overflow: hidden;
-    transform: scale(10);
+    top: 140px;
+    left: 112px;
 }
 
 .player {
-    image-rendering: pixelated;
     background: url("../../assets/imgs/player/player_sprite_sheet.png")
         no-repeat 0 0;
     width: 14px;

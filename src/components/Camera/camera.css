@@ -1,0 +1,9 @@
+:root {
+    --screen-size: 720px;
+}
+
+.camera {
+    width: var(--screen-size);
+    height: var(--screen-size);
+    overflow: hidden;
+}

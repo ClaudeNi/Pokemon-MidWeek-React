@@ -1,10 +1,11 @@
 import React from "react";
-import Player from "../Player/Player";
+import Camera from "../Camera/Camera";
+import "./gameBoard.css";
 
 const GameBoard = () => {
     return (
-        <div>
-            <Player />
+        <div className="gameboard">
+            <Camera />
         </div>
     );
 };

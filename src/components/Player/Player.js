@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./player.css";
 
-const Player = () => {
+const Player = (props) => {
+    const playerRef = useRef();
+
+    useEffect(() => {
+        window.addEventListener("keydown", (e) => {
+            console.log(e.key);
+        });
+    });
+
     return (
-        <div className="player-container">
-            <div className="player"></div>
+        <div
+            ref={playerRef}
+            className="player-container"
+            facing="down"
+            walking="true"
+        >
+            <div className={`player pixel-art`}></div>
         </div>
     );
 };
