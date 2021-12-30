@@ -6,7 +6,7 @@ const HomePage = () => {
     return (
         <div className="homepage">
             Homepage
-            <Link to="/game">To the game</Link>
+            <Link to="/game/starterTown">To the game</Link>
         </div>
     );
 };
