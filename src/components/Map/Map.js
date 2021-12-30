@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Player from "../Player/Player";
-import mapsData from "./mapsData";
+// import mapsData from "./mapsData";
 import "./map.css";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 const Map = () => {
-    const { mapName } = useParams();
+    // const { mapName } = useParams();
     const mapRef = useRef();
     const [currentMap, setCurrentMap] = useState("");
 
