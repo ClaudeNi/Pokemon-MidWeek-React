@@ -1,0 +1,33 @@
+.battleboard {
+    width: 720px;
+    min-height: 720px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px #000 solid;
+}
+
+.route101 {
+    background: url("../../assets/imgs/maps/grassMap.png") center center / 100%
+        100% no-repeat;
+    flex-grow: 1;
+}
+
+.text-box {
+    background: url("../../assets/imgs/ui/battle_TextBox.png") center center /
+        100% 100% no-repeat;
+    flex-grow: 0;
+}
+
+.texts {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2rem;
+}
+
+.option-text {
+    padding: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+}

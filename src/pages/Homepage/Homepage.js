@@ -7,6 +7,7 @@ const HomePage = () => {
         <div className="homepage">
             Homepage
             <Link to="/game/starterTown">To the game</Link>
+            <Link to="/game/battle/route101">To the battle</Link>
         </div>
     );
 };

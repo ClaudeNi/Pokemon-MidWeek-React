@@ -1,19 +1,25 @@
-import starterTownBG from "../../assets/imgs/maps/starterTown.png";
-
 const starterHouse = {
     background: "",
+    battleMap: "",
     walls: [],
     npcs: [],
 };
 
 const starterTown = {
-    background: starterTownBG,
-    walls: [],
+    background: "../../assets/imgs/maps/starterTown.png",
+    battleMap: "",
+    walls: [
+        [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0,
+        ],
+    ],
     npcs: [],
 };
 
 const route101 = {
     background: "",
+    battleMap: "../../assets/imgs/maps/grassMap.png",
     walls: [],
     npcs: [],
 };
@@ -21,7 +27,7 @@ const route101 = {
 const mapData = {
     starterHouse: starterHouse,
     starterTown: starterTown,
-    route105: route101,
+    route101: route101,
 };
 
 export default mapData;

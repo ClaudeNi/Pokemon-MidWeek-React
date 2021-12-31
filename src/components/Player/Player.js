@@ -6,7 +6,7 @@ const Player = (props) => {
 
     useEffect(() => {
         window.addEventListener("keydown", (e) => {
-            console.log(e.key);
+            // console.log(e.key);
         });
     });
 
