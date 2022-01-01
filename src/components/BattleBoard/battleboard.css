@@ -22,11 +22,17 @@
     justify-content: space-between;
 }
 
+.pokemon {
+    height: 150px;
+    width: 50%;
+}
+
 .text-box {
     background: url("../../assets/imgs/ui/battle_TextBox.png") center center /
         100% 100% no-repeat;
     flex-grow: 0;
     z-index: 4;
+    display: flex;
 }
 
 .texts {
@@ -36,25 +42,41 @@
 }
 
 .option-text {
-    padding: 1rem;
-    font-size: 2rem;
-    color: #fff;
+    color: #000;
+    font-weight: 700;
+    padding: 0.5rem;
+    font-size: 1.5rem;
     cursor: pointer;
     z-index: 5;
+    border: 2px dotted transparent;
+    margin: 0 0.5rem;
 }
 
-.treecko_back {
-    background: url("../../assets/pokemon/252_back.png") center center / contain
-        no-repeat;
-    height: 150px;
-    width: 50%;
-    transform: translateY(10px);
+.option-text:hover {
+    border-color: #000;
 }
 
-.treecko_front {
-    background: url("../../assets/pokemon/252_front.png") center center /
-        contain no-repeat;
-    height: 150px;
+.left-textbox {
+    flex-grow: 3;
     width: 50%;
-    transform: translateY(120px);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+    padding-left: 2rem;
+}
+
+.left-textbox .left-text {
+    word-wrap: break-word;
+    max-width: 18ch;
+    line-height: 1.5rem;
+    font-size: 1.3rem;
+    height: fit-content;
+}
+
+.right-textbox {
+    background: url("../../assets/imgs/ui/battle_TextBox_options.png") center
+        center / 100% 100% no-repeat;
+    flex-grow: 1;
+    width: 50%;
 }

@@ -1,0 +1,25 @@
+.container {
+    height: fit-content;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 10px;
+    margin: 1rem 0.5rem;
+    padding: 1rem;
+    font-weight: 700;
+    background: url("../../assets/imgs/ui/battle_TextBox_options.png") center
+        center / 100% 100% no-repeat;
+}
+
+.mid {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+}
+
+.hp,
+.exp {
+    height: 20px;
+    margin-right: 0.5rem;
+}
