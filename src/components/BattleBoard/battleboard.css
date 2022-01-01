@@ -11,12 +11,22 @@
     background: url("../../assets/imgs/maps/grassMap.png") center center / 100%
         100% no-repeat;
     flex-grow: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pokemon-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .text-box {
     background: url("../../assets/imgs/ui/battle_TextBox.png") center center /
         100% 100% no-repeat;
     flex-grow: 0;
+    z-index: 4;
 }
 
 .texts {
@@ -30,4 +40,21 @@
     font-size: 2rem;
     color: #fff;
     cursor: pointer;
+    z-index: 5;
+}
+
+.treecko_back {
+    background: url("../../assets/pokemon/252_back.png") center center / contain
+        no-repeat;
+    height: 150px;
+    width: 50%;
+    transform: translateY(10px);
+}
+
+.treecko_front {
+    background: url("../../assets/pokemon/252_front.png") center center /
+        contain no-repeat;
+    height: 150px;
+    width: 50%;
+    transform: translateY(120px);
 }
