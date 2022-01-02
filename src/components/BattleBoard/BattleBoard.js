@@ -64,6 +64,7 @@ const BattleBoard = () => {
                             who="Player"
                             pokemon={pokemon}
                             maxHP={pokemon.stats.hp}
+                            exp={0}
                         />
                     </div>
                 </div>

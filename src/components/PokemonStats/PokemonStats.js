@@ -5,12 +5,7 @@ const PokemonStats = (props) => {
     const [hp, setHp] = useState(props.pokemon.stats.hp);
     const [hpBg, setHpBg] = useState("green");
     // eslint-disable-next-line
-    const [exp, setExp] = useState(props.pokemon.exp);
-    // eslint-disable-next-line
-    const [expBg, setExpBg] = useState();
-
-    const hpRef = useRef();
-    const expRef = useRef();
+    const [exp, setExp] = useState(props.exp);
 
     useEffect(() => {
         handleHealth(hp);
@@ -31,26 +26,41 @@ const PokemonStats = (props) => {
     return (
         <div className="container">
             <div className="top">
-                {props.pokemon.name} Lv{props.pokemon.level}
+                {props.pokemon.name} <span>Lv{props.pokemon.level}</span>
             </div>
             <div className="mid">
-                <div
-                    ref={hpRef}
-                    className="hp"
-                    style={{ width: hp * 5, background: hpBg }}
-                ></div>
+                <div className="mid-container">
+                    HP
+                    <div className="hp-container">
+                        <div
+                            className="hp"
+                            style={{
+                                width: `${(hp / props.maxHP) * 100}%`,
+                                background: hpBg,
+                            }}
+                        ></div>
+                    </div>
+                </div>
                 {props.who === "Player" ? (
                     <span>
                         {hp}/{props.maxHP}
                     </span>
                 ) : null}
             </div>
+
             {props.who === "Player" ? (
-                <div
-                    ref={expRef}
-                    className="exp"
-                    style={{ width: hp * 5, background: hpBg }}
-                ></div>
+                <div className="bottom">
+                    EXP
+                    <div className="exp-container">
+                        <div
+                            className="exp"
+                            style={{
+                                width: `${(exp / 100) * 100}%`,
+                                background: "blue",
+                            }}
+                        ></div>
+                    </div>
+                </div>
             ) : null}
         </div>
     );
