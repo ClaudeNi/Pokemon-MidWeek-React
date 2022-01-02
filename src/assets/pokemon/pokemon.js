@@ -217,6 +217,7 @@ const arr = [
     {
         id: 0,
         name: "",
+        type: "",
         front_img: "",
         back_img: "",
         moveList: [
