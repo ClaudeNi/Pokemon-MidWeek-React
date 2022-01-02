@@ -4,15 +4,16 @@ import usersApi from "../../api/usersApi";
 import "./login.css";
 
 const Login = () => {
+    const [users, setUsers] = useState([]);
     const [isLogging, setIsLogging] = useState(true);
+    const [emailText, setEmailText] = useState("");
+    const [passText, setPassText] = useState("");
     const [btnText, setBtnText] = useState("Login");
     const [bottomText, setBottomText] = useState("Don't have an account? ");
     const [bottomBtn, setBottomBtn] = useState("Register");
 
     const emailRef = useRef();
     const passRef = useRef();
-
-    let users = [];
 
     useEffect(() => {
         fetchUsers();
@@ -22,7 +23,7 @@ const Login = () => {
     const fetchUsers = async () => {
         try {
             const fetchedUsers = await usersApi.get("pokemonUsers");
-            users = [...fetchedUsers.data];
+            setUsers([...fetchedUsers.data]);
         } catch (e) {
             console.log(e);
         }
@@ -52,26 +53,31 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (isLogging) {
-            const user = users.filter(
-                (user) => user.login.email === emailRef.current.value
-            )[0];
-            if (user.length === 0) {
-                console.log("no such user exists");
-            } else if (user.login.password === passRef.current.value) {
-                console.log("logged in");
+        if (
+            emailRef.current.value.length > 0 &&
+            passRef.current.value.length > 0
+        ) {
+            if (isLogging) {
+                const user = users.filter(
+                    (user) => user.login.email === emailRef.current.value
+                );
+                if (user[0] === undefined) {
+                    console.log("no such user exists");
+                } else if (user[0].login.password === passRef.current.value) {
+                    console.log("logged in");
+                } else {
+                    console.log("wrong password");
+                }
             } else {
-                console.log("wrong password");
+                const loginData = {
+                    login: {
+                        email: emailRef.current.value,
+                        password: passRef.current.value,
+                    },
+                };
+                addUser(loginData);
+                handleSwitch();
             }
-        } else {
-            const loginData = {
-                login: {
-                    email: emailRef.current.value,
-                    password: passRef.current.value,
-                },
-            };
-            addUser(loginData);
-            handleSwitch();
         }
     };
 
@@ -84,6 +90,8 @@ const Login = () => {
                     type={"email"}
                     id="email"
                     placeholder="email"
+                    value={emailText}
+                    onChange={(e) => setEmailText(e.target.value)}
                     required
                 ></input>
                 <label>Password:</label>
@@ -92,6 +100,8 @@ const Login = () => {
                     type={"password"}
                     id="password"
                     placeholder="password"
+                    value={passText}
+                    onChange={(e) => setPassText(e.target.value)}
                     required
                 ></input>
                 <input
