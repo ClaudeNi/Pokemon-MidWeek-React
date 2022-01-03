@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Btn from "../Btn/Btn";
 import usersApi from "../../api/usersApi";
 import "./login.css";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
     const [users, setUsers] = useState([]);
@@ -14,6 +15,8 @@ const Login = () => {
 
     const emailRef = useRef();
     const passRef = useRef();
+
+    const history = useHistory();
 
     useEffect(() => {
         fetchUsers();
@@ -65,6 +68,7 @@ const Login = () => {
                     console.log("no such user exists");
                 } else if (user[0].login.password === passRef.current.value) {
                     console.log("logged in");
+                    history.push("/title");
                 } else {
                     console.log("wrong password");
                 }

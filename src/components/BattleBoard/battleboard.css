@@ -1,3 +1,8 @@
+.all-container {
+    display: flex;
+    align-items: center;
+}
+
 .battleboard {
     width: 720px;
     min-height: 720px;
@@ -7,14 +12,15 @@
     border: 1px #000 solid;
 }
 
-.route101 {
+.route101,
+.custom {
     background: url("../../assets/imgs/maps/grassMap.png") center center / 100%
         100% no-repeat;
     flex-grow: 1;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
 }
 
 .pokemon-container {
@@ -25,6 +31,14 @@
 .pokemon {
     height: 150px;
     width: 50%;
+    align-self: flex-end;
+}
+
+.stats {
+    align-self: center;
+    width: 50%;
+    display: flex;
+    justify-content: center;
 }
 
 .text-box {

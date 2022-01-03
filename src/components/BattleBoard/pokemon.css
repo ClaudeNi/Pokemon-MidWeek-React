@@ -1,7 +1,6 @@
 .treecko_back {
     background: url("../../assets/pokemon/252_back.png") center center / contain
         no-repeat;
-    transform: translateY(10px);
 }
 
 .treecko_front {
@@ -13,7 +12,6 @@
 .torchic_back {
     background: url("../../assets/pokemon/255_back.png") center center / contain
         no-repeat;
-    transform: translateY(10px);
 }
 
 .torchic_front {
@@ -25,7 +23,6 @@
 .mudkip_back {
     background: url("../../assets/pokemon/258_back.png") center center / contain
         no-repeat;
-    transform: translateY(10px);
 }
 
 .mudkip_front {

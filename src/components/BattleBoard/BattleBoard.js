@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import TeamBuilder from "../TeamBuilder/TeamBuilder";
 import PokemonStats from "../PokemonStats/PokemonStats";
 import pokemonList from "../../assets/pokemon/pokemon";
 import "./battleboard.css";
@@ -45,50 +46,55 @@ const BattleBoard = () => {
     };
 
     return (
-        <div ref={boardRef} className="battleboard">
-            <div className={`${mapName} pixel-art`}>
-                <div className="pokemon-container">
-                    <div className="stats">
-                        <PokemonStats
-                            who="Enemy"
-                            pokemon={enemyPokemon}
-                            maxHP={enemyPokemon.stats.hp}
-                        />
+        <div className="all-container">
+            {mapName === "custom" ? <TeamBuilder /> : null}
+            <div ref={boardRef} className="battleboard">
+                <div className={`${mapName} pixel-art`}>
+                    <div className="pokemon-container">
+                        <div className="stats">
+                            <PokemonStats
+                                who="Enemy"
+                                pokemon={enemyPokemon}
+                                maxHP={enemyPokemon.stats.hp}
+                            />
+                        </div>
+                        <div
+                            className={`pokemon ${enemyPokemon.front_img}`}
+                        ></div>
                     </div>
-                    <div className={`pokemon ${enemyPokemon.front_img}`}></div>
-                </div>
-                <div className="pokemon-container">
-                    <div className={`pokemon ${pokemon.back_img}`}></div>
-                    <div className="stats">
-                        <PokemonStats
-                            who="Player"
-                            pokemon={pokemon}
-                            maxHP={pokemon.stats.hp}
-                            exp={0}
-                        />
+                    <div className="pokemon-container">
+                        <div className={`pokemon ${pokemon.back_img}`}></div>
+                        <div className="stats">
+                            <PokemonStats
+                                who="Player"
+                                pokemon={pokemon}
+                                maxHP={pokemon.stats.hp}
+                                exp={0}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="text-box pixel-art">
-                <div className="left-textbox">
-                    <span className="left-text">{text}</span>
-                </div>
-                <div ref={optionsBox} className="right-textbox">
-                    <div className="texts">
-                        <span ref={button1Ref} className="option-text">
-                            Fight
-                        </span>
-                        <span ref={button2Ref} className="option-text">
-                            Bag
-                        </span>
+                <div className="text-box pixel-art">
+                    <div className="left-textbox">
+                        <span className="left-text">{text}</span>
                     </div>
-                    <div className="texts">
-                        <span ref={button3Ref} className="option-text">
-                            Pokemon
-                        </span>
-                        <span ref={button4Ref} className="option-text">
-                            Run
-                        </span>
+                    <div ref={optionsBox} className="right-textbox">
+                        <div className="texts">
+                            <span ref={button1Ref} className="option-text">
+                                Fight
+                            </span>
+                            <span ref={button2Ref} className="option-text">
+                                Bag
+                            </span>
+                        </div>
+                        <div className="texts">
+                            <span ref={button3Ref} className="option-text">
+                                Pokemon
+                            </span>
+                            <span ref={button4Ref} className="option-text">
+                                Run
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
