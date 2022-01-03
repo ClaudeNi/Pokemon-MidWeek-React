@@ -1,10 +1,11 @@
 .all-container {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .battleboard {
-    width: 720px;
+    min-width: 720px;
     min-height: 720px;
     display: flex;
     flex-direction: column;
@@ -89,8 +90,8 @@
 }
 
 .right-textbox {
-    background: url("../../assets/imgs/ui/battle_TextBox_options.png") center
-        center / 100% 100% no-repeat;
+    /* background: url("../../assets/imgs/ui/battle_TextBox_options.png") center
+        center / 100% 100% no-repeat; */
     flex-grow: 1;
     width: 50%;
 }

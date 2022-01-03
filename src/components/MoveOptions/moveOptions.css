@@ -1,0 +1,15 @@
+.fight-container {
+    display: flex;
+    background: #333;
+}
+
+.pp {
+    background: url("../../assets/imgs/ui/battle_TextBox_options.png") center
+        center / 100% 100% no-repeat;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+}

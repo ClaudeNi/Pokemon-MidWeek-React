@@ -1,0 +1,5 @@
+.text-container {
+    background: url("../../assets/imgs/ui/battle_TextBox_options.png") center
+        center / 100% 100% no-repeat;
+    width: 100%;
+}

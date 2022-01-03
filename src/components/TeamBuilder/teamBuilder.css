@@ -1,4 +1,14 @@
-.container {
+.select-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+}
+
+.select {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
 }

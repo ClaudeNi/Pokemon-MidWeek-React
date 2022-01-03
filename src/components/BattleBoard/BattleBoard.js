@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import TeamBuilder from "../TeamBuilder/TeamBuilder";
 import PokemonStats from "../PokemonStats/PokemonStats";
 import pokemonList from "../../assets/pokemon/pokemon";
+import Options from "../Options/Options";
+import MoveOptions from "../MoveOptions/MoveOptions";
 import "./battleboard.css";
 import "./pokemon.css";
 
@@ -17,25 +19,22 @@ const BattleBoard = () => {
         pokemonList.get(playerPokemonList[0])
     );
     // eslint-disable-next-line
+    const [selectingPlayer, setSelectingPlayer] = useState(true);
+    // eslint-disable-next-line
     const [enemyPokemonList, setEnemyPokemonList] = useState([255]);
     const [enemyPokemon, setEnemyPokemon] = useState(
         pokemonList.get(enemyPokemonList[0])
     );
+    const [fighting, setFighting] = useState(false);
+    // eslint-disable-next-line
+    const [selectedMove, setSelectedMove] = useState(pokemon.moveList[0]);
 
     const boardRef = useRef();
     const optionsBox = useRef();
-    const button1Ref = useRef();
-    const button2Ref = useRef();
-    const button3Ref = useRef();
-    const button4Ref = useRef();
 
     useEffect(() => {
         displayPokemon(playerPokemonList[0], enemyPokemonList[0]);
     }, [playerPokemonList, enemyPokemonList]);
-
-    useEffect(() => {
-        button1Ref.current.addEventListener("click", () => {});
-    });
 
     const displayPokemon = (playerId, enemyId) => {
         const playerPokemon = pokemonList.get(playerId);
@@ -45,9 +44,27 @@ const BattleBoard = () => {
         setEnemyPokemon(enemyPokemon);
     };
 
+    const handleSelectClick = (id) => {
+        const pokemon = pokemonList.get(id);
+        if (selectingPlayer) {
+            setPokemon(pokemon);
+        } else {
+            setEnemyPokemon(pokemon);
+        }
+    };
+
+    const handleFight = () => {
+        setFighting(true);
+    };
+
     return (
         <div className="all-container">
-            {mapName === "custom" ? <TeamBuilder /> : null}
+            {mapName === "custom" ? (
+                <TeamBuilder
+                    pokemon={pokemonList}
+                    handleClick={handleSelectClick}
+                />
+            ) : null}
             <div ref={boardRef} className="battleboard">
                 <div className={`${mapName} pixel-art`}>
                     <div className="pokemon-container">
@@ -74,29 +91,27 @@ const BattleBoard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="text-box pixel-art">
-                    <div className="left-textbox">
-                        <span className="left-text">{text}</span>
-                    </div>
-                    <div ref={optionsBox} className="right-textbox">
-                        <div className="texts">
-                            <span ref={button1Ref} className="option-text">
-                                Fight
-                            </span>
-                            <span ref={button2Ref} className="option-text">
-                                Bag
-                            </span>
+                {fighting ? (
+                    <MoveOptions
+                        selectedMove={selectedMove}
+                        pokemon={pokemon}
+                    />
+                ) : (
+                    <div className="text-box pixel-art">
+                        <div className="left-textbox">
+                            <span className="left-text">{text}</span>
                         </div>
-                        <div className="texts">
-                            <span ref={button3Ref} className="option-text">
-                                Pokemon
-                            </span>
-                            <span ref={button4Ref} className="option-text">
-                                Run
-                            </span>
+                        <div ref={optionsBox} className="right-textbox">
+                            <Options
+                                handleClick1={handleFight}
+                                btn1="Fight"
+                                btn2="Bag"
+                                btn3="Pokemon"
+                                btn4="Run"
+                            />
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
