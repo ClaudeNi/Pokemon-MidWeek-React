@@ -20,8 +20,13 @@
     font-size: 1.2rem;
 }
 
-.label {
-    font-weight: 600;
+.bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-container {
+    display: flex;
 }
 
 .pokemon-container {
@@ -35,4 +40,14 @@
 
 .pokemon-container .line {
     margin: 0.5rem 0;
+}
+
+.label {
+    font-weight: 600;
+}
+
+.moves-container {
+    height: 300px;
+    overflow: auto;
+    padding: 1rem;
 }

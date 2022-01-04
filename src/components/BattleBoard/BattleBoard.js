@@ -5,7 +5,7 @@ import pokemonList from "../../assets/pokemon/pokemon";
 import Options from "../Options/Options";
 import MoveOptions from "../MoveOptions/MoveOptions";
 import "./battleboard.css";
-import "./pokemon.css";
+// import "./pokemon.css";
 
 const BattleBoard = () => {
     const { mapName } = useParams();
