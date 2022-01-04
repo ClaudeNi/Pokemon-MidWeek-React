@@ -43,15 +43,6 @@ const BattleBoard = () => {
         setEnemyPokemon(enemyPokemon);
     };
 
-    const handleSelectClick = (id) => {
-        const pokemon = pokemonList.get(id);
-        if (selectingPlayer) {
-            setPokemon(pokemon);
-        } else {
-            setEnemyPokemon(pokemon);
-        }
-    };
-
     const handleFight = () => {
         setFighting(true);
     };
@@ -73,7 +64,9 @@ const BattleBoard = () => {
                         ></div>
                     </div>
                     <div className="pokemon-container">
-                        <div className={`pokemon ${pokemon.back_img}`}></div>
+                        <div className={`pokemon ${pokemon.back_img}`}>
+                            <img src={pokemon.back_img} alt={pokemon.name} />
+                        </div>
                         <div className="stats">
                             <PokemonStats
                                 who="Player"

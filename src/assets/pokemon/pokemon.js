@@ -13,16 +13,16 @@ class Pokemon {
 }
 
 const LINK =
-    "https://github.com/Checchii/sprites/blob/master/sprites/pokemon/versions/generation-iii/ruby-sapphire";
-const END = "?raw=true";
+    "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
+// const END = "?raw=true";
 
 const arr = [
     {
         id: 252,
         name: "Treecko",
         type: "Grass",
-        front_img: `${LINK}/252.png${END}`,
-        back_img: `${LINK}/back/252.png${END}`,
+        front_img: `${LINK}/252.gif`,
+        back_img: `${LINK}/back/252.gif`,
         moveList: [
             {
                 level: 1,

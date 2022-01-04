@@ -6,8 +6,33 @@
     width: 100%;
 }
 
-.btns-container {
+.search-container {
     display: flex;
-    justify-content: space-around;
-    width: 50%;
+}
+
+.search-container .input {
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.search-container .btn {
+    font-size: 1.2rem;
+}
+
+.label {
+    font-weight: 600;
+}
+
+.pokemon-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background: #ccc;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.pokemon-container .line {
+    margin: 0.5rem 0;
 }
