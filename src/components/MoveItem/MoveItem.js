@@ -6,6 +6,7 @@ const MoveItem = (props) => {
 
     const handleClick = () => {
         moveRef.current.classList.toggle("move-selected");
+        props.moveHandle(props.move.move.name);
     };
     return (
         <div

@@ -38,7 +38,11 @@
     border-radius: 10px;
 }
 
-.pokemon-container .line {
+.pokemon-container img {
+    image-rendering: pixelated;
+}
+
+.line {
     margin: 0.5rem 0;
 }
 
@@ -50,4 +54,20 @@
     height: 300px;
     overflow: auto;
     padding: 1rem;
+}
+
+.selected-moves-container {
+    height: 300px;
+    overflow: auto;
+}
+
+.selected-moves-container,
+.selected-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 30ch;
+    padding: 1rem;
+    border: 1px #000 solid;
+    border-radius: 10px;
+    margin: 0.5rem;
 }

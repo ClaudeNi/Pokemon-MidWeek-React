@@ -4,12 +4,15 @@ import pokeApi from "../../api/pokeAPI";
 import "./teamBuilder.css";
 import MoveItem from "../MoveItem/MoveItem";
 
+const LINK =
+    "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
+
 const TeamBuilder = () => {
     const [inputValue, setInputValue] = useState("");
     const [pokemon, setpokemon] = useState("");
+    const [selectedMoves, setSelectedMoves] = useState([]);
 
     const inputRef = useRef();
-    // const moveRef = useRef();
 
     useEffect(() => {
         inputRef.current.addEventListener("keyup", handleSearch);
@@ -36,10 +39,18 @@ const TeamBuilder = () => {
         }
     };
 
-    // const handleMoveClick = () => {
-    //     console.log(moveRef.current);
-    //     moveRef.current.classList.toggle("move-selected");
-    // };
+    const handleMoveSelect = async (name) => {
+        const result = await pokeApi.get(`move/${name}`);
+        const moves = [...selectedMoves];
+        if (moves.filter((move) => move.name === name)[0]) {
+            const index = moves.findIndex((move) => move.name === name);
+            moves.splice(index, 1);
+        } else {
+            moves.push(result.data);
+        }
+
+        setSelectedMoves(moves);
+    };
 
     const handleAdd = () => {};
 
@@ -49,7 +60,7 @@ const TeamBuilder = () => {
                 <div className="all-container">
                     <div className="pokemon-container">
                         <img
-                            src={pokemon.sprites.front_default}
+                            src={`${LINK}/${pokemon.id}.gif`}
                             alt={pokemon.id}
                         />
                         <div className="line">
@@ -62,6 +73,9 @@ const TeamBuilder = () => {
                         </div>
                     </div>
                     <div className="moves-container">{displayMoves()}</div>
+                    <div className="selected-moves-container">
+                        Selected moves {displaySelectedMoves()}
+                    </div>
                 </div>
                 <div>
                     <Btn text="Add" clickHandle={handleAdd} />
@@ -72,7 +86,30 @@ const TeamBuilder = () => {
 
     const displayMoves = () => {
         return pokemon.moves.map((move) => {
-            return <MoveItem key={move.move.url} move={move} />;
+            return (
+                <MoveItem
+                    key={move.move.url}
+                    move={move}
+                    moveHandle={handleMoveSelect}
+                />
+            );
+        });
+    };
+
+    const displaySelectedMoves = () => {
+        return selectedMoves.map((move) => {
+            return (
+                <div key={move.id} className="selected-container">
+                    <div className="line">
+                        <span className="label">Name: </span>
+                        {move.name}
+                    </div>
+                    <div className="line">
+                        <span className="label">Desc: </span>
+                        {move.flavor_text_entries[0].flavor_text}
+                    </div>
+                </div>
+            );
         });
     };
 
