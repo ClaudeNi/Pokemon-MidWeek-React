@@ -6,15 +6,23 @@ class Pokemon {
     get(id) {
         return this.arr.filter((pokemon) => pokemon.id === id)[0];
     }
+
+    getList() {
+        return this.arr;
+    }
 }
+
+const LINK =
+    "https://github.com/Checchii/sprites/blob/master/sprites/pokemon/versions/generation-iii/ruby-sapphire";
+const END = "?raw=true";
 
 const arr = [
     {
         id: 252,
         name: "Treecko",
         type: "Grass",
-        front_img: "treecko_front",
-        back_img: "treecko_back",
+        front_img: `${LINK}/252.png${END}`,
+        back_img: `${LINK}/back/252.png${END}`,
         moveList: [
             {
                 level: 1,
@@ -136,8 +144,8 @@ const arr = [
         id: 263,
         name: "Zigzagoon",
         type: "Normal",
-        front_img: "263_front",
-        back_img: "263_back",
+        front_img: "Zigzagoon_front",
+        back_img: "Zigzagoon_back",
         moveList: [
             {
                 level: 1,
@@ -177,8 +185,8 @@ const arr = [
         id: 261,
         name: "Poochyena",
         type: "Dark",
-        front_img: "261_front",
-        back_img: "261_back",
+        front_img: "Poochyena_front",
+        back_img: "Poochyena_back",
         moveList: [
             {
                 level: 1,
@@ -214,38 +222,40 @@ const arr = [
         description:
             "It savagely threatens foes with bared fangs. It chases after fleeing targets tenaciously. It turns tail and runs, however, if the foe strikes back.",
     },
-    {
-        id: 0,
-        name: "",
-        type: "",
-        front_img: "",
-        back_img: "",
-        moveList: [
-            {
-                level: 1,
-                name: "",
-                type: "",
-                category: "",
-                power: "",
-                accuracy: "",
-            },
-        ],
-        evolution: {
-            level: 0,
-            id: 0,
-        },
-        stats: {
-            hp: 0,
-            attack: 0,
-            defense: 0,
-            spAtk: 0,
-            spDef: 0,
-            speed: 0,
-        },
-        description: "",
-    },
 ];
 
 const pokemonList = new Pokemon(arr);
 
 export default pokemonList;
+
+// pokemon template
+// {
+//     id: 0,
+//     name: "",
+//     type: "",
+//     front_img: "",
+//     back_img: "",
+//     moveList: [
+//         {
+//             level: 1,
+//             name: "",
+//             type: "",
+//             category: "",
+//             power: "",
+//             accuracy: "",
+//         },
+//     ],
+//     evolution: {
+//         level: 0,
+//         id: 0,
+//     },
+//     stats: {
+//         hp: 0,
+//         attack: 0,
+//         defense: 0,
+//         spAtk: 0,
+//         spDef: 0,
+//         speed: 0,
+//     },
+//     description: "",
+// },

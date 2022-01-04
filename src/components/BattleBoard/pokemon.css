@@ -30,3 +30,25 @@
         contain no-repeat;
     /* transform: translateY(120px); */
 }
+
+.Zigzagoon_back {
+    background: url("../../assets/pokemon/263_back.png") center center / contain
+        no-repeat;
+}
+
+.Zigzagoon_front {
+    background: url("../../assets/pokemon/263_front.png") center center /
+        contain no-repeat;
+    /* transform: translateY(120px); */
+}
+
+.Poochyena_back {
+    background: url("../../assets/pokemon/261_back.png") center center / contain
+        no-repeat;
+}
+
+.Poochyena_front {
+    background: url("../../assets/pokemon/261_front.png") center center /
+        contain no-repeat;
+    /* transform: translateY(120px); */
+}

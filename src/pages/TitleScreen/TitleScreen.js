@@ -8,7 +8,7 @@ const TitleScreen = () => {
         <div>
             Pokemon
             <Btn text="Normal Mode" />
-            <Link to="/game/battle/custom">
+            <Link to="/TeamBuilder">
                 <Btn text="Custom Battle Mode" />
             </Link>
         </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import TeamBuilder from "../TeamBuilder/TeamBuilder";
 import PokemonStats from "../PokemonStats/PokemonStats";
 import pokemonList from "../../assets/pokemon/pokemon";
 import Options from "../Options/Options";
@@ -21,7 +20,7 @@ const BattleBoard = () => {
     // eslint-disable-next-line
     const [selectingPlayer, setSelectingPlayer] = useState(true);
     // eslint-disable-next-line
-    const [enemyPokemonList, setEnemyPokemonList] = useState([255]);
+    const [enemyPokemonList, setEnemyPokemonList] = useState([258]);
     const [enemyPokemon, setEnemyPokemon] = useState(
         pokemonList.get(enemyPokemonList[0])
     );
@@ -59,12 +58,6 @@ const BattleBoard = () => {
 
     return (
         <div className="all-container">
-            {mapName === "custom" ? (
-                <TeamBuilder
-                    pokemon={pokemonList}
-                    handleClick={handleSelectClick}
-                />
-            ) : null}
             <div ref={boardRef} className="battleboard">
                 <div className={`${mapName} pixel-art`}>
                     <div className="pokemon-container">
