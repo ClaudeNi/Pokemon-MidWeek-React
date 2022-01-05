@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Btn from "../Btn/Btn";
+import Spinner from "../Spinner/Spinner";
 import pokeApi from "../../api/pokeAPI";
 import "./teamBuilder.css";
 import MoveItem from "../MoveItem/MoveItem";
@@ -18,6 +19,7 @@ const TeamBuilder = () => {
     const [enemyPokemonList, setEnemyPokemonList] = useState([]);
     const [choosingPlayer, setChoosingPlayer] = useState(true);
     const [text, setText] = useState("");
+    const [spinner, setSpinner] = useState(false);
 
     const inputRef = useRef();
 
@@ -33,9 +35,11 @@ const TeamBuilder = () => {
 
     const fetchPokemon = async (input) => {
         if (input < 650 && input > 0) {
+            setSpinner(true);
             try {
                 const result = await pokeApi.get(`pokemon/${input}`);
                 setpokemon(result.data);
+                setSpinner(false);
             } catch (e) {
                 console.log(e);
             }
@@ -59,6 +63,7 @@ const TeamBuilder = () => {
     };
 
     const handleMoveSelect = async (name) => {
+        setSpinner(true);
         try {
             const result = await pokeApi.get(`move/${name}`);
 
@@ -81,6 +86,7 @@ const TeamBuilder = () => {
                 }
                 setEnemySelectedMoves(moves);
             }
+            setSpinner(false);
         } catch (e) {
             console.log(e);
         }
@@ -201,6 +207,7 @@ const TeamBuilder = () => {
 
     return (
         <div className="team-builder">
+            {spinner ? <Spinner /> : null}
             <span>Please choose a Pokemon from Gen 1 up to Gen 5.</span>
             <span>
                 You can search by either their ID (1 - 649) or their name.

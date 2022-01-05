@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import PokemonStats from "../PokemonStats/PokemonStats";
 import Options from "../Options/Options";
 import MoveOptions from "../MoveOptions/MoveOptions";
@@ -8,8 +8,10 @@ import "./battleboard.css";
 
 const LINK =
     "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
+let winnerCheck = false;
 
 const BattleBoard = () => {
+    const history = useHistory();
     const { mapName } = useParams();
     const pokemonStorage = JSON.parse(window.sessionStorage.pokemon);
     const enemyStorage = JSON.parse(window.sessionStorage.enemy);
@@ -43,25 +45,55 @@ const BattleBoard = () => {
     const boardRef = useRef();
     const optionsBox = useRef();
 
-    useEffect(() => {
-        // displayPokemon(playerPokemonList[0], enemyPokemonList[0]);
-        // eslint-disable-next-line
-    }, [playerPokemonList, enemyPokemonList]);
-
-    // const displayPokemon = (playerId, enemyId) => {
-    //     const playerPokemon = pokemonStorage.pokemon;
-    //     const enemyPokemon = pokemonList.get(enemyId);
-    //     console.log(playerPokemon, 1);
-    //     setPokemon(playerPokemon.pokemon);
-    //     setEnemyPokemon(enemyPokemon);
-    // };
-
     const handleFight = () => {
         setFighting(!fighting);
     };
 
     const handleDamage = (dmg, move) => {
-        setEnemyDmg(enemyDmg + dmg);
+        setText(`${pokemon[0].name} use ${selectedMove[move].name}!`);
+        setTimeout(() => {
+            setEnemyDmg(enemyDmg + dmg);
+            if (!winnerCheck) {
+                setTimeout(() => {
+                    handleEnemyTurn();
+                }, 1000);
+            }
+        }, 1000);
+    };
+
+    const handleGameOver = (winner) => {
+        setText(`${winner} have won the game!`);
+        setTimeout(() => {
+            history.replace("/TeamBuilder");
+        }, 5000);
+    };
+
+    const handleEnemyTurn = () => {
+        if (!winnerCheck) {
+            const chosenMove = Math.floor(
+                Math.random() * enemyStorage.moves.length
+            );
+
+            if (enemyStorage.moves.length > 0) {
+                setText(
+                    `${enemyPokemon[0].name} used ${enemyStorage.moves[chosenMove].name}!`
+                );
+                const dmg = Math.floor(
+                    ((((2 * 100) / 5 + 2) *
+                        enemyStorage.moves[chosenMove].power *
+                        (enemyPokemon[0].stats[1].base_stat /
+                            enemyPokemon[0].stats[2].base_stat)) /
+                        50 +
+                        2) *
+                        Math.min(Math.random() + 0.5, 1)
+                );
+                setPlayerDmg(playerDmg + dmg);
+            }
+        }
+    };
+
+    const handleWinnerSet = () => {
+        winnerCheck = true;
     };
 
     return (
@@ -77,6 +109,8 @@ const BattleBoard = () => {
                                 initialHP={enemyPokemon[0].stats[0].base_stat}
                                 damage={enemyDmg}
                                 level={100}
+                                gameOverHandle={handleGameOver}
+                                handleWin={handleWinnerSet}
                             />
                         </div>
                         <div className={`pokemon`}>
@@ -97,12 +131,14 @@ const BattleBoard = () => {
                         </div>
                         <div className="stats">
                             <PokemonStats
-                                who="Player"
+                                who="You"
                                 pokemon={pokemon}
                                 maxHP={pokemon[0].stats[0].base_stat}
                                 initialHP={pokemon[0].stats[0].base_stat}
                                 damage={playerDmg}
                                 level={100}
+                                gameOverHandle={handleGameOver}
+                                handleWin={handleWinnerSet}
                             />
                         </div>
                     </div>

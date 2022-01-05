@@ -22,6 +22,7 @@ const PokemonStats = (props) => {
 
     useEffect(() => {
         handleHealth(hp);
+        gameOverCheck();
         // eslint-disable-next-line
     }, [hp]);
 
@@ -43,6 +44,17 @@ const PokemonStats = (props) => {
             setHp(0);
         } else {
             setHp(currentHP);
+        }
+    };
+
+    const gameOverCheck = () => {
+        if (hp <= 0) {
+            props.handleWin();
+            if (props.who === "You") {
+                props.gameOverHandle("Enemy");
+            } else {
+                props.gameOverHandle("You");
+            }
         }
     };
 

@@ -48,7 +48,7 @@ const MoveOptions = (props) => {
         if (props.moves[0].currentPP > 0) {
             props.moves[0].currentPP--;
             setPP(props.moves[0].currentPP);
-            props.dmgHandle(calcDamage(props.lvl, 0));
+            props.dmgHandle(calcDamage(props.lvl, 0), 0);
             props.fightHandle();
         }
     };
@@ -56,7 +56,7 @@ const MoveOptions = (props) => {
         if (props.moves[1].currentPP > 0) {
             props.moves[1].currentPP--;
             setPP(props.moves[1].currentPP);
-            props.dmgHandle(calcDamage(props.lvl, 1));
+            props.dmgHandle(calcDamage(props.lvl, 1), 1);
             props.fightHandle();
         }
     };
@@ -65,7 +65,7 @@ const MoveOptions = (props) => {
             if (props.moves[2].currentPP > 0) {
                 props.moves[2].currentPP--;
                 setPP(props.moves[2].currentPP);
-                props.dmgHandle(calcDamage(props.lvl, 2));
+                props.dmgHandle(calcDamage(props.lvl, 2), 2);
                 props.fightHandle();
             }
         }
@@ -75,7 +75,7 @@ const MoveOptions = (props) => {
             if (props.moves[3].currentPP > 0) {
                 props.moves[3].currentPP--;
                 setPP(props.moves[3].currentPP);
-                props.dmgHandle(calcDamage(props.lvl, 3));
+                props.dmgHandle(calcDamage(props.lvl, 3), 3);
                 props.fightHandle();
             }
         }
