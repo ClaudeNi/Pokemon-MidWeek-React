@@ -99,3 +99,10 @@
     margin-bottom: 1rem;
     font-weight: 700;
 }
+
+.highlight-text {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 0.5rem 0;
+}

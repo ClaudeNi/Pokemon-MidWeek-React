@@ -153,7 +153,7 @@ const TeamBuilder = () => {
                         Selected moves {displaySelectedMoves()}
                     </div>
                 </div>
-                {text}
+                <span className="highlight-text">{text}</span>
                 <Btn
                     text={btnText}
                     clickHandle={handleFinish}
@@ -229,7 +229,7 @@ const TeamBuilder = () => {
         <div className="team-builder">
             {spinner ? <Spinner /> : null}
             {warningText !== "" ? (
-                <span className="intro-text-container">{warningText}</span>
+                <span className="highlight-text">{warningText}</span>
             ) : (
                 ""
             )}
