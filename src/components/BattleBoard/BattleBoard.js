@@ -64,7 +64,7 @@ const BattleBoard = () => {
         setText(`${winner} have won the game!`);
         setTimeout(() => {
             history.replace("/title");
-        }, 5000);
+        }, 3000);
     };
 
     const handleEnemyTurn = () => {
@@ -97,7 +97,7 @@ const BattleBoard = () => {
     };
 
     return (
-        <div className="all-container">
+        <div className="all-all-container">
             {disable ? <div className="disable-container"></div> : null}
             <div className="battleboard">
                 <div className={`${mapName} pixel-art`}>
