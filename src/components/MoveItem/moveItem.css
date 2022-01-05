@@ -10,6 +10,7 @@
     background: #ccc;
 }
 
-.move-selected {
-    background: #ccc;
+.move-selected,
+.move:hover.move-selected {
+    background: #00ab66;
 }

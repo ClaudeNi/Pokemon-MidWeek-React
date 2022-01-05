@@ -29,7 +29,7 @@
     display: flex;
 }
 
-.pokemon-container {
+.pokemon-build-container {
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -62,12 +62,13 @@
 }
 
 .selected-moves-container,
-.selected-container {
+.selected-container,
+.moves-container {
     display: flex;
     flex-direction: column;
     max-width: 30ch;
     padding: 1rem;
     border: 1px #000 solid;
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px;
     margin: 0.5rem;
 }

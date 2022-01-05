@@ -1,26 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Btn from "../Btn/Btn";
 import pokeApi from "../../api/pokeAPI";
 import "./teamBuilder.css";
 import MoveItem from "../MoveItem/MoveItem";
 
-const LINK =
-    "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
+// const LINK =
+//     "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
 
 const TeamBuilder = () => {
     const [inputValue, setInputValue] = useState("");
     const [pokemon, setpokemon] = useState("");
     const [selectedMoves, setSelectedMoves] = useState([]);
+    const [pokemonList, setPokemonList] = useState([]);
 
     const inputRef = useRef();
+
+    const history = useHistory();
 
     useEffect(() => {
         inputRef.current.addEventListener("keyup", handleSearch);
     });
 
     const fetchPokemon = async (input) => {
-        const result = await pokeApi.get(`pokemon/${input}`);
-        setpokemon(result.data);
+        try {
+            const result = await pokeApi.get(`pokemon/${input}`);
+            setpokemon(result.data);
+            const newList = [...pokemonList];
+            newList.push(result.data);
+            setPokemonList(newList);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     const handleSearch = (e) => {
@@ -40,27 +51,43 @@ const TeamBuilder = () => {
     };
 
     const handleMoveSelect = async (name) => {
-        const result = await pokeApi.get(`move/${name}`);
-        const moves = [...selectedMoves];
-        if (moves.filter((move) => move.name === name)[0]) {
-            const index = moves.findIndex((move) => move.name === name);
-            moves.splice(index, 1);
-        } else {
-            moves.push(result.data);
-        }
+        try {
+            const result = await pokeApi.get(`move/${name}`);
+            const moves = [...selectedMoves];
+            if (moves.filter((move) => move.name === name)[0]) {
+                const index = moves.findIndex((move) => move.name === name);
+                moves.splice(index, 1);
+            } else {
+                moves.push(result.data);
+            }
 
-        setSelectedMoves(moves);
+            setSelectedMoves(moves);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
-    const handleAdd = () => {};
+    const handleAdd = () => {
+        if (pokemonList.length < 6) {
+        }
+    };
+
+    const handleFinish = () => {
+        const finalList = {
+            pokemon: pokemon,
+            moves: selectedMoves,
+        };
+        window.sessionStorage.setItem("pokemon", JSON.stringify(finalList));
+        history.replace("/game/battle/custom");
+    };
 
     const displayPokemon = () => {
         return (
             <div className="bottom">
                 <div className="all-container">
-                    <div className="pokemon-container">
+                    <div className="pokemon-build-container">
                         <img
-                            src={`${LINK}/${pokemon.id}.gif`}
+                            src={pokemon.sprites.front_default}
                             alt={pokemon.id}
                         />
                         <div className="line">
@@ -80,6 +107,7 @@ const TeamBuilder = () => {
                 <div>
                     <Btn text="Add" clickHandle={handleAdd} />
                 </div>
+                <Btn text="Finish" clickHandle={handleFinish} />
             </div>
         );
     };
@@ -91,6 +119,7 @@ const TeamBuilder = () => {
                     key={move.move.url}
                     move={move}
                     moveHandle={handleMoveSelect}
+                    length={selectedMoves.length}
                 />
             );
         });

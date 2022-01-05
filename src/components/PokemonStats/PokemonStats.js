@@ -2,17 +2,30 @@ import React, { useEffect, useState } from "react";
 import "./pokemonStats.css";
 
 const PokemonStats = (props) => {
-    const [hp, setHp] = useState(props.pokemon.stats.hp);
+    const calcStats = (stat, base, lvl) => {
+        const start = (2 * base * lvl) / 100;
+        switch (stat) {
+            case "attack":
+            case "defense":
+            case "special-attack":
+            case "special-defense":
+            case "speed":
+                return start + 5;
+            default:
+                return start + lvl + 10;
+        }
+    };
+
+    const maxHP = calcStats("hp", props.initialHP, 100);
+    const [hp, setHp] = useState(maxHP);
     const [hpBg, setHpBg] = useState("green");
-    // eslint-disable-next-line
-    const [exp, setExp] = useState(props.exp);
 
     useEffect(() => {
         handleHealth(hp);
     });
 
     const handleHealth = (currentHP) => {
-        const health = (currentHP / props.maxHP) * 100;
+        const health = (currentHP / maxHP) * 100;
         if (health <= 25) {
             setHpBg("red");
         } else if (health <= 50) {
@@ -26,7 +39,8 @@ const PokemonStats = (props) => {
     return (
         <div className="container">
             <div className="top">
-                {props.pokemon.name} <span>Lv{props.pokemon.level}</span>
+                {props.pokemon.name.toUpperCase()}{" "}
+                <span>Lv{props.pokemon.level}</span>
             </div>
             <div className="mid">
                 <div className="mid-container">
@@ -35,7 +49,7 @@ const PokemonStats = (props) => {
                         <div
                             className="hp"
                             style={{
-                                width: `${(hp / props.maxHP) * 100}%`,
+                                width: `${(hp / maxHP) * 100}%`,
                                 background: hpBg,
                             }}
                         ></div>
@@ -43,25 +57,10 @@ const PokemonStats = (props) => {
                 </div>
                 {props.who === "Player" ? (
                     <span>
-                        {hp}/{props.maxHP}
+                        {hp}/{maxHP}
                     </span>
                 ) : null}
             </div>
-
-            {props.who === "Player" ? (
-                <div className="bottom">
-                    EXP
-                    <div className="exp-container">
-                        <div
-                            className="exp"
-                            style={{
-                                width: `${(exp / 100) * 100}%`,
-                                background: "blue",
-                            }}
-                        ></div>
-                    </div>
-                </div>
-            ) : null}
         </div>
     );
 };

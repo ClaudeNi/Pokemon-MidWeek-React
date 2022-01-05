@@ -9,39 +9,45 @@ import "./battleboard.css";
 
 const BattleBoard = () => {
     const { mapName } = useParams();
+    const pokemonStorage = JSON.parse(window.sessionStorage.pokemon);
 
     // eslint-disable-next-line
-    const [text, setText] = useState("You sent out Treecko");
-    // eslint-disable-next-line
-    const [playerPokemonList, setPlayerPokemonList] = useState([252]);
-    const [pokemon, setPokemon] = useState(
-        pokemonList.get(playerPokemonList[0])
+    const [text, setText] = useState(
+        `${pokemonStorage[0].pokemon.name.toUpperCase()} go!`
     );
+    // eslint-disable-next-line
+    const [playerPokemonList, setPlayerPokemonList] = useState([
+        pokemonStorage[0].pokemon,
+    ]);
+    // eslint-disable-next-line
+    const [pokemon, setPokemon] = useState(pokemonStorage[0].pokemon);
     // eslint-disable-next-line
     const [selectingPlayer, setSelectingPlayer] = useState(true);
     // eslint-disable-next-line
     const [enemyPokemonList, setEnemyPokemonList] = useState([258]);
+    // eslint-disable-next-line
     const [enemyPokemon, setEnemyPokemon] = useState(
         pokemonList.get(enemyPokemonList[0])
     );
     const [fighting, setFighting] = useState(false);
     // eslint-disable-next-line
-    const [selectedMove, setSelectedMove] = useState(pokemon.moveList[0]);
+    const [selectedMove, setSelectedMove] = useState(pokemonStorage[0].moves);
 
     const boardRef = useRef();
     const optionsBox = useRef();
 
     useEffect(() => {
-        displayPokemon(playerPokemonList[0], enemyPokemonList[0]);
+        // displayPokemon(playerPokemonList[0], enemyPokemonList[0]);
+        // eslint-disable-next-line
     }, [playerPokemonList, enemyPokemonList]);
 
-    const displayPokemon = (playerId, enemyId) => {
-        const playerPokemon = pokemonList.get(playerId);
-        const enemyPokemon = pokemonList.get(enemyId);
-
-        setPokemon(playerPokemon);
-        setEnemyPokemon(enemyPokemon);
-    };
+    // const displayPokemon = (playerId, enemyId) => {
+    //     const playerPokemon = pokemonStorage.pokemon;
+    //     const enemyPokemon = pokemonList.get(enemyId);
+    //     console.log(playerPokemon, 1);
+    //     setPokemon(playerPokemon.pokemon);
+    //     setEnemyPokemon(enemyPokemon);
+    // };
 
     const handleFight = () => {
         setFighting(true);
@@ -57,6 +63,7 @@ const BattleBoard = () => {
                                 who="Enemy"
                                 pokemon={enemyPokemon}
                                 maxHP={enemyPokemon.stats.hp}
+                                initialHP={enemyPokemon.stats.hp}
                             />
                         </div>
                         <div
@@ -64,15 +71,19 @@ const BattleBoard = () => {
                         ></div>
                     </div>
                     <div className="pokemon-container">
-                        <div className={`pokemon ${pokemon.back_img}`}>
-                            <img src={pokemon.back_img} alt={pokemon.name} />
+                        <div className={`pokemon `}>
+                            {console.log(pokemon)}
+                            <img
+                                src={pokemon.sprites.back_default}
+                                alt={pokemon.name}
+                            />
                         </div>
                         <div className="stats">
                             <PokemonStats
                                 who="Player"
                                 pokemon={pokemon}
-                                maxHP={pokemon.stats.hp}
-                                exp={0}
+                                maxHP={pokemon.stats[0].base_stat}
+                                initialHP={pokemon.stats[0].base_stat}
                             />
                         </div>
                     </div>
@@ -81,6 +92,7 @@ const BattleBoard = () => {
                     <MoveOptions
                         selectedMove={selectedMove}
                         pokemon={pokemon}
+                        moves={selectedMove}
                     />
                 ) : (
                     <div className="text-box pixel-art">
