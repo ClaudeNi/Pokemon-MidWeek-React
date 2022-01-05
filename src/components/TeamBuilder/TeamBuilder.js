@@ -14,6 +14,7 @@ const TeamBuilder = () => {
     const [selectedMoves, setSelectedMoves] = useState([]);
     const [enemySelectedMoves, setEnemySelectedMoves] = useState([]);
     const [pokemonList, setPokemonList] = useState([]);
+    // eslint-disable-next-line
     const [enemyPokemonList, setEnemyPokemonList] = useState([]);
     const [choosingPlayer, setChoosingPlayer] = useState(true);
     const [text, setText] = useState("");

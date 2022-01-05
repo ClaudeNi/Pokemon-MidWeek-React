@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import PokemonStats from "../PokemonStats/PokemonStats";
-import pokemonList from "../../assets/pokemon/pokemon";
 import Options from "../Options/Options";
 import MoveOptions from "../MoveOptions/MoveOptions";
 import "./battleboard.css";
