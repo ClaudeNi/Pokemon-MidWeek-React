@@ -66,7 +66,7 @@ const TeamBuilder = () => {
         setSpinner(true);
         try {
             const result = await pokeApi.get(`move/${name}`);
-
+            console.log(result.data);
             if (choosingPlayer) {
                 const moves = [...selectedMoves];
                 if (moves.filter((move) => move.name === name)[0]) {

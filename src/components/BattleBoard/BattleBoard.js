@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import PokemonStats from "../PokemonStats/PokemonStats";
 import Options from "../Options/Options";
@@ -41,15 +41,14 @@ const BattleBoard = () => {
     const [fighting, setFighting] = useState(false);
     // eslint-disable-next-line
     const [selectedMove, setSelectedMove] = useState(pokemonStorage.moves);
-
-    const boardRef = useRef();
-    const optionsBox = useRef();
+    const [disable, setDisable] = useState(false);
 
     const handleFight = () => {
         setFighting(!fighting);
     };
 
     const handleDamage = (dmg, move) => {
+        setDisable(true);
         setText(`${pokemon[0].name} use ${selectedMove[move].name}!`);
         setTimeout(() => {
             setEnemyDmg(enemyDmg + dmg);
@@ -64,7 +63,7 @@ const BattleBoard = () => {
     const handleGameOver = (winner) => {
         setText(`${winner} have won the game!`);
         setTimeout(() => {
-            history.replace("/TeamBuilder");
+            history.replace("/title");
         }, 5000);
     };
 
@@ -89,6 +88,7 @@ const BattleBoard = () => {
                 );
                 setPlayerDmg(playerDmg + dmg);
             }
+            setDisable(false);
         }
     };
 
@@ -98,7 +98,8 @@ const BattleBoard = () => {
 
     return (
         <div className="all-container">
-            <div ref={boardRef} className="battleboard">
+            {disable ? <div className="disable-container"></div> : null}
+            <div className="battleboard">
                 <div className={`${mapName} pixel-art`}>
                     <div className="pokemon-container">
                         <div className="stats">
@@ -160,7 +161,7 @@ const BattleBoard = () => {
                     <div className="left-textbox">
                         <span className="left-text">{text}</span>
                     </div>
-                    <div ref={optionsBox} className="right-textbox">
+                    <div className="right-textbox">
                         <Options
                             handleClick1={handleFight}
                             btn1="Fight"
