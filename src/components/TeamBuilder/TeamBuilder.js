@@ -12,13 +12,19 @@ const TeamBuilder = () => {
     const [inputValue, setInputValue] = useState("");
     const [pokemon, setpokemon] = useState("");
     const [selectedMoves, setSelectedMoves] = useState([]);
+    const [enemySelectedMoves, setEnemySelectedMoves] = useState([]);
     const [pokemonList, setPokemonList] = useState([]);
+    const [enemyPokemonList, setEnemyPokemonList] = useState([]);
     const [choosingPlayer, setChoosingPlayer] = useState(true);
     const [text, setText] = useState("");
 
     const inputRef = useRef();
 
     const history = useHistory();
+
+    useEffect(() => {
+        window.sessionStorage.clear();
+    }, []);
 
     useEffect(() => {
         inputRef.current.addEventListener("keyup", handleSearch);
@@ -29,9 +35,6 @@ const TeamBuilder = () => {
             try {
                 const result = await pokeApi.get(`pokemon/${input}`);
                 setpokemon(result.data);
-                const newList = [...pokemonList];
-                newList.push(result.data);
-                setPokemonList(newList);
             } catch (e) {
                 console.log(e);
             }
@@ -65,7 +68,11 @@ const TeamBuilder = () => {
                 moves.push(result.data);
             }
 
-            setSelectedMoves(moves);
+            if (choosingPlayer) {
+                setSelectedMoves(moves);
+            } else {
+                setEnemySelectedMoves(moves);
+            }
         } catch (e) {
             console.log(e);
         }
@@ -81,12 +88,23 @@ const TeamBuilder = () => {
             setText("Please choose at least 2 attack moves for the Pokemon");
         } else if (choosingPlayer) {
             setChoosingPlayer(false);
+            const newList = [...pokemonList];
+            newList.push(pokemon);
+            setPokemonList(newList);
         } else {
+            const newList = [...enemyPokemonList];
+            newList.push(pokemon);
+
             const finalList = {
-                pokemon: pokemon,
+                pokemon: pokemonList,
                 moves: selectedMoves,
             };
+            const enemyList = {
+                pokemon: newList,
+                moves: enemySelectedMoves,
+            };
             window.sessionStorage.setItem("pokemon", JSON.stringify(finalList));
+            window.sessionStorage.setItem("enemy", JSON.stringify(enemyList));
             history.replace("/game/battle/custom");
         }
     };

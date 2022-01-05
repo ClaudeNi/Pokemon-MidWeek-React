@@ -7,13 +7,17 @@ import MoveOptions from "../MoveOptions/MoveOptions";
 import "./battleboard.css";
 // import "./pokemon.css";
 
+const LINK =
+    "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
+
 const BattleBoard = () => {
     const { mapName } = useParams();
     const pokemonStorage = JSON.parse(window.sessionStorage.pokemon);
+    const enemyStorage = JSON.parse(window.sessionStorage.enemy);
 
     // eslint-disable-next-line
     const [text, setText] = useState(
-        `${pokemonStorage.pokemon.name.toUpperCase()} go!`
+        `${pokemonStorage.pokemon[0].name.toUpperCase()} go!`
     );
     // eslint-disable-next-line
     const [playerPokemonList, setPlayerPokemonList] = useState([
@@ -26,11 +30,11 @@ const BattleBoard = () => {
     // eslint-disable-next-line
     const [playerDmg, setPlayerDmg] = useState(0);
     // eslint-disable-next-line
-    const [enemyPokemonList, setEnemyPokemonList] = useState([258]);
+    const [enemyPokemonList, setEnemyPokemonList] = useState([
+        enemyStorage.pokemon,
+    ]);
     // eslint-disable-next-line
-    const [enemyPokemon, setEnemyPokemon] = useState(
-        pokemonList.get(enemyPokemonList[0])
-    );
+    const [enemyPokemon, setEnemyPokemon] = useState(enemyStorage.pokemon);
     // eslint-disable-next-line
     const [enemyDmg, setEnemyDmg] = useState(0);
     const [fighting, setFighting] = useState(false);
@@ -58,8 +62,7 @@ const BattleBoard = () => {
     };
 
     const handleDamage = (dmg, move) => {
-        setPlayerDmg(playerDmg + dmg);
-        console.log(playerDmg);
+        setEnemyDmg(enemyDmg + dmg);
     };
 
     return (
@@ -71,29 +74,34 @@ const BattleBoard = () => {
                             <PokemonStats
                                 who="Enemy"
                                 pokemon={enemyPokemon}
-                                maxHP={enemyPokemon.stats.hp}
-                                initialHP={enemyPokemon.stats.hp}
+                                maxHP={enemyPokemon[0].stats[0].base_stat}
+                                initialHP={enemyPokemon[0].stats[0].base_stat}
                                 damage={enemyDmg}
                                 level={100}
                             />
                         </div>
-                        <div
-                            className={`pokemon ${enemyPokemon.front_img}`}
-                        ></div>
+                        <div className={`pokemon`}>
+                            <img
+                                src={`${LINK}/${enemyPokemon[0].id}.gif`}
+                                alt={enemyPokemon[0].name}
+                                className="pixel"
+                            />
+                        </div>
                     </div>
                     <div className="pokemon-container">
                         <div className={`pokemon`}>
                             <img
-                                src={pokemon.sprites.back_default}
-                                alt={pokemon.name}
+                                src={`${LINK}/back/${pokemon[0].id}.gif`}
+                                alt={pokemon[0].name}
+                                className="pixel"
                             />
                         </div>
                         <div className="stats">
                             <PokemonStats
                                 who="Player"
                                 pokemon={pokemon}
-                                maxHP={pokemon.stats[0].base_stat}
-                                initialHP={pokemon.stats[0].base_stat}
+                                maxHP={pokemon[0].stats[0].base_stat}
+                                initialHP={pokemon[0].stats[0].base_stat}
                                 damage={playerDmg}
                                 level={100}
                             />

@@ -35,7 +35,6 @@
     width: 100%;
     display: flex;
     align-items: center;
-    border-radius: 10px;
     background: #333;
     margin-left: 0.5rem;
 }
@@ -43,7 +42,6 @@
 .hp,
 .exp {
     height: 20px;
-    border-radius: 10px;
     transition: all 0.3s ease-in-out;
 }
 

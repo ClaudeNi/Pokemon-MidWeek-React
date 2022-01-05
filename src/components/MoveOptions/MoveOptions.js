@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Btn from "../Btn/Btn";
 import Options from "../Options/Options";
 import "./moveOptions.css";
 
@@ -35,15 +36,15 @@ const MoveOptions = (props) => {
         return Math.floor(
             ((((2 * lvl) / 5 + 2) *
                 props.moves[move].power *
-                (props.pokemon.stats[1].base_stat /
-                    props.pokemon.stats[2].base_stat)) /
+                (props.pokemon[0].stats[1].base_stat /
+                    props.pokemon[0].stats[2].base_stat)) /
                 50 +
                 2) *
                 Math.min(Math.random() + 0.5, 1)
         );
     };
 
-    const moveHandl1 = () => {
+    const moveHandle1 = () => {
         if (props.moves[0].currentPP > 0) {
             props.moves[0].currentPP--;
             setPP(props.moves[0].currentPP);
@@ -51,7 +52,7 @@ const MoveOptions = (props) => {
             props.fightHandle();
         }
     };
-    const moveHandl2 = () => {
+    const moveHandle2 = () => {
         if (props.moves[1].currentPP > 0) {
             props.moves[1].currentPP--;
             setPP(props.moves[1].currentPP);
@@ -59,7 +60,7 @@ const MoveOptions = (props) => {
             props.fightHandle();
         }
     };
-    const moveHandl3 = () => {
+    const moveHandle3 = () => {
         if (props.moves[2] !== undefined) {
             if (props.moves[2].currentPP > 0) {
                 props.moves[2].currentPP--;
@@ -69,7 +70,7 @@ const MoveOptions = (props) => {
             }
         }
     };
-    const moveHandl4 = () => {
+    const moveHandle4 = () => {
         if (props.moves[3] !== undefined) {
             if (props.moves[3].currentPP > 0) {
                 props.moves[3].currentPP--;
@@ -95,16 +96,17 @@ const MoveOptions = (props) => {
                         ? "-"
                         : props.moves[3].name.split("-").join(" ").toUpperCase()
                 }
-                handleClick1={moveHandl1}
-                handleClick2={moveHandl2}
-                handleClick3={moveHandl3}
-                handleClick4={moveHandl4}
+                handleClick1={moveHandle1}
+                handleClick2={moveHandle2}
+                handleClick3={moveHandle3}
+                handleClick4={moveHandle4}
                 selectingMove={true}
                 selected={btnHover}
             />
             <div className="pp">
                 <span>{`PP ${pp}/${maxPP}`}</span>
                 <span>{`Type/${type}`}</span>
+                <Btn text="Back" clickHandle={props.fightHandle} />
             </div>
         </div>
     );

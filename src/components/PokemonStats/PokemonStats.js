@@ -49,7 +49,8 @@ const PokemonStats = (props) => {
     return (
         <div className="container">
             <div className="top">
-                {props.pokemon.name.toUpperCase()} <span>Lv{props.level}</span>
+                {props.pokemon[0].name.toUpperCase()}{" "}
+                <span>Lv{props.level}</span>
             </div>
             <div className="mid">
                 <div className="mid-container">

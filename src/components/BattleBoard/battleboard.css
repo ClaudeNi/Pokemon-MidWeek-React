@@ -36,6 +36,15 @@
     align-self: flex-end;
 }
 
+.pokemon img {
+    width: auto;
+    height: 100%;
+}
+
+.pixel {
+    image-rendering: pixelated;
+}
+
 .stats {
     align-self: center;
     width: 50%;
