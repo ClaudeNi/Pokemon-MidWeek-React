@@ -12,17 +12,23 @@ const PokemonStats = (props) => {
             case "speed":
                 return start + 5;
             default:
-                return start + lvl + 10;
+                return start + lvl * 2 + 10;
         }
     };
 
-    const maxHP = calcStats("hp", props.initialHP, 100);
-    const [hp, setHp] = useState(maxHP - props.damage);
+    const maxHP = calcStats("hp", props.initialHP, props.level);
+    const [hp, setHp] = useState(maxHP);
     const [hpBg, setHpBg] = useState("green");
 
     useEffect(() => {
         handleHealth(hp);
-    });
+        // eslint-disable-next-line
+    }, [hp]);
+
+    useEffect(() => {
+        setHp(hp - props.damage);
+        // eslint-disable-next-line
+    }, [props.damage]);
 
     const handleHealth = (currentHP) => {
         const health = (currentHP / maxHP) * 100;
@@ -33,14 +39,17 @@ const PokemonStats = (props) => {
         } else {
             setHpBg("green");
         }
-        setHp(currentHP);
+        if (currentHP < 0) {
+            setHp(0);
+        } else {
+            setHp(currentHP);
+        }
     };
 
     return (
         <div className="container">
             <div className="top">
-                {props.pokemon.name.toUpperCase()}{" "}
-                <span>Lv{props.pokemon.level}</span>
+                {props.pokemon.name.toUpperCase()} <span>Lv{props.level}</span>
             </div>
             <div className="mid">
                 <div className="mid-container">

@@ -13,25 +13,29 @@ const BattleBoard = () => {
 
     // eslint-disable-next-line
     const [text, setText] = useState(
-        `${pokemonStorage[0].pokemon.name.toUpperCase()} go!`
+        `${pokemonStorage.pokemon.name.toUpperCase()} go!`
     );
     // eslint-disable-next-line
     const [playerPokemonList, setPlayerPokemonList] = useState([
-        pokemonStorage[0].pokemon,
+        pokemonStorage.pokemon,
     ]);
     // eslint-disable-next-line
-    const [pokemon, setPokemon] = useState(pokemonStorage[0].pokemon);
+    const [pokemon, setPokemon] = useState(pokemonStorage.pokemon);
     // eslint-disable-next-line
     const [selectingPlayer, setSelectingPlayer] = useState(true);
+    // eslint-disable-next-line
+    const [playerDmg, setPlayerDmg] = useState(0);
     // eslint-disable-next-line
     const [enemyPokemonList, setEnemyPokemonList] = useState([258]);
     // eslint-disable-next-line
     const [enemyPokemon, setEnemyPokemon] = useState(
         pokemonList.get(enemyPokemonList[0])
     );
+    // eslint-disable-next-line
+    const [enemyDmg, setEnemyDmg] = useState(0);
     const [fighting, setFighting] = useState(false);
     // eslint-disable-next-line
-    const [selectedMove, setSelectedMove] = useState(pokemonStorage[0].moves);
+    const [selectedMove, setSelectedMove] = useState(pokemonStorage.moves);
 
     const boardRef = useRef();
     const optionsBox = useRef();
@@ -50,7 +54,12 @@ const BattleBoard = () => {
     // };
 
     const handleFight = () => {
-        setFighting(true);
+        setFighting(!fighting);
+    };
+
+    const handleDamage = (dmg, move) => {
+        setPlayerDmg(playerDmg + dmg);
+        console.log(playerDmg);
     };
 
     return (
@@ -64,7 +73,8 @@ const BattleBoard = () => {
                                 pokemon={enemyPokemon}
                                 maxHP={enemyPokemon.stats.hp}
                                 initialHP={enemyPokemon.stats.hp}
-                                damage={0}
+                                damage={enemyDmg}
+                                level={100}
                             />
                         </div>
                         <div
@@ -84,34 +94,40 @@ const BattleBoard = () => {
                                 pokemon={pokemon}
                                 maxHP={pokemon.stats[0].base_stat}
                                 initialHP={pokemon.stats[0].base_stat}
-                                damage={0}
+                                damage={playerDmg}
+                                level={100}
                             />
                         </div>
                     </div>
                 </div>
-                {fighting ? (
-                    <MoveOptions
-                        selectedMove={selectedMove}
-                        pokemon={pokemon}
-                        moves={selectedMove}
-                    />
-                ) : (
-                    <div className="text-box pixel-art">
-                        <div className="left-textbox">
-                            <span className="left-text">{text}</span>
-                        </div>
-                        <div ref={optionsBox} className="right-textbox">
-                            <Options
-                                handleClick1={handleFight}
-                                btn1="Fight"
-                                btn2="Bag"
-                                btn3="Pokemon"
-                                btn4="Run"
-                                selected={() => {}}
-                            />
-                        </div>
+                <MoveOptions
+                    selectedMove={selectedMove}
+                    pokemon={pokemon}
+                    moves={selectedMove}
+                    lvl={100}
+                    fightHandle={handleFight}
+                    dmgHandle={handleDamage}
+                    displayClass={fighting ? "" : "hide-display"}
+                />
+                <div
+                    className={`text-box pixel-art ${
+                        fighting ? "hide-display" : ""
+                    }`}
+                >
+                    <div className="left-textbox">
+                        <span className="left-text">{text}</span>
                     </div>
-                )}
+                    <div ref={optionsBox} className="right-textbox">
+                        <Options
+                            handleClick1={handleFight}
+                            btn1="Fight"
+                            btn2="Bag"
+                            btn3="Pokemon"
+                            btn4="Run"
+                            selected={() => {}}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     );

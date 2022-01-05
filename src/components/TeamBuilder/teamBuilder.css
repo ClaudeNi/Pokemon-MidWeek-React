@@ -6,6 +6,10 @@
     width: 100%;
 }
 
+.pixel {
+    image-rendering: pixelated;
+}
+
 .search-container {
     display: flex;
 }
@@ -36,10 +40,6 @@
     background: #ccc;
     border: 1px solid #000;
     border-radius: 10px;
-}
-
-.pokemon-container img {
-    image-rendering: pixelated;
 }
 
 .line {

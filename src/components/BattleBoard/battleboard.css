@@ -96,3 +96,7 @@
     flex-grow: 1;
     width: 50%;
 }
+
+.hide-display {
+    display: none !important;
+}

@@ -5,14 +5,16 @@ import pokeApi from "../../api/pokeAPI";
 import "./teamBuilder.css";
 import MoveItem from "../MoveItem/MoveItem";
 
-// const LINK =
-//     "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
+const LINK =
+    "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
 
 const TeamBuilder = () => {
     const [inputValue, setInputValue] = useState("");
     const [pokemon, setpokemon] = useState("");
     const [selectedMoves, setSelectedMoves] = useState([]);
     const [pokemonList, setPokemonList] = useState([]);
+    const [choosingPlayer, setChoosingPlayer] = useState(true);
+    const [text, setText] = useState("");
 
     const inputRef = useRef();
 
@@ -23,14 +25,16 @@ const TeamBuilder = () => {
     });
 
     const fetchPokemon = async (input) => {
-        try {
-            const result = await pokeApi.get(`pokemon/${input}`);
-            setpokemon(result.data);
-            const newList = [...pokemonList];
-            newList.push(result.data);
-            setPokemonList(newList);
-        } catch (e) {
-            console.log(e);
+        if (input < 650 && input > 0) {
+            try {
+                const result = await pokeApi.get(`pokemon/${input}`);
+                setpokemon(result.data);
+                const newList = [...pokemonList];
+                newList.push(result.data);
+                setPokemonList(newList);
+            } catch (e) {
+                console.log(e);
+            }
         }
     };
 
@@ -73,12 +77,18 @@ const TeamBuilder = () => {
     };
 
     const handleFinish = () => {
-        const finalList = {
-            pokemon: pokemon,
-            moves: selectedMoves,
-        };
-        window.sessionStorage.setItem("pokemon", JSON.stringify(finalList));
-        history.replace("/game/battle/custom");
+        if (selectedMoves.length < 2) {
+            setText("Please choose at least 2 attack moves for the Pokemon");
+        } else if (choosingPlayer) {
+            setChoosingPlayer(false);
+        } else {
+            const finalList = {
+                pokemon: pokemon,
+                moves: selectedMoves,
+            };
+            window.sessionStorage.setItem("pokemon", JSON.stringify(finalList));
+            history.replace("/game/battle/custom");
+        }
     };
 
     const displayPokemon = () => {
@@ -87,8 +97,9 @@ const TeamBuilder = () => {
                 <div className="all-container">
                     <div className="pokemon-build-container">
                         <img
-                            src={pokemon.sprites.front_default}
+                            src={`${LINK}/${pokemon.id}.gif`}
                             alt={pokemon.id}
+                            className="pixel"
                         />
                         <div className="line">
                             <span className="label">Name: </span>
@@ -107,7 +118,8 @@ const TeamBuilder = () => {
                 <div>
                     <Btn text="Add" clickHandle={handleAdd} />
                 </div>
-                <Btn text="Finish" clickHandle={handleFinish} />
+                {text}
+                <Btn text="Choose Enemy's Pokemon" clickHandle={handleFinish} />
             </div>
         );
     };
@@ -144,6 +156,13 @@ const TeamBuilder = () => {
 
     return (
         <div className="team-builder">
+            <span>Please choose a Pokemon from Gen 1 up to Gen 5.</span>
+            <span>
+                You can search by either their ID (1 - 649) or their name.
+            </span>
+            {choosingPlayer
+                ? "Choosing your Pokemon"
+                : "Choosing your enemy's Pokemon"}
             <div className="search-container">
                 <input
                     ref={inputRef}
