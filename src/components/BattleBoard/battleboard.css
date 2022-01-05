@@ -36,18 +36,21 @@
     width: 50%;
     height: 30vh;
     display: flex;
-    align-self: stretch;
+    align-items: flex-end;
     justify-content: center;
 }
 
 .pokemon img {
-    height: 500px;
     width: auto;
     height: 100%;
 }
 
 .pixel {
     image-rendering: pixelated;
+}
+
+img.pixel {
+    height: 25vh;
 }
 
 .stats {
@@ -116,4 +119,36 @@
     width: 100%;
     position: absolute;
     z-index: 10;
+}
+
+.attack-up {
+    animation: attackUp 0.3s;
+}
+
+.attack-down {
+    animation: attackDown 0.3s;
+}
+
+@keyframes attackUp {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(50px, -50px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes attackDown {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(-50px, 50px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
 }

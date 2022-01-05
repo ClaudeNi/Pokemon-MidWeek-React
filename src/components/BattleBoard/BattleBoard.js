@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import PokemonStats from "../PokemonStats/PokemonStats";
 import Options from "../Options/Options";
@@ -43,6 +43,9 @@ const BattleBoard = () => {
     const [selectedMove, setSelectedMove] = useState(pokemonStorage.moves);
     const [disable, setDisable] = useState(false);
 
+    const pokemonRef = useRef();
+    const enemyRef = useRef();
+
     const handleFight = () => {
         setFighting(!fighting);
     };
@@ -50,6 +53,7 @@ const BattleBoard = () => {
     const handleDamage = (dmg, move) => {
         setDisable(true);
         setText(`${pokemon[0].name} use ${selectedMove[move].name}!`);
+        pokemonRef.current.classList.add("attack-up");
         setTimeout(() => {
             setEnemyDmg(enemyDmg + dmg);
             if (!winnerCheck) {
@@ -57,6 +61,7 @@ const BattleBoard = () => {
                     handleEnemyTurn();
                 }, 1000);
             }
+            pokemonRef.current.classList.remove("attack-up");
         }, 1000);
     };
 
@@ -77,6 +82,7 @@ const BattleBoard = () => {
                 setText(
                     `${enemyPokemon[0].name} used ${enemyStorage.moves[chosenMove].name}!`
                 );
+                enemyRef.current.classList.add("attack-down");
                 const dmg = Math.floor(
                     ((((2 * 100) / 5 + 2) *
                         enemyStorage.moves[chosenMove].power *
@@ -87,6 +93,9 @@ const BattleBoard = () => {
                         Math.min(Math.random() + 0.5, 1)
                 );
                 setPlayerDmg(playerDmg + dmg);
+                setTimeout(() => {
+                    enemyRef.current.classList.remove("attack-down");
+                }, 1000);
             }
             setDisable(false);
         }
@@ -114,7 +123,7 @@ const BattleBoard = () => {
                                 handleWin={handleWinnerSet}
                             />
                         </div>
-                        <div className={`pokemon`}>
+                        <div ref={enemyRef} className={`pokemon`}>
                             <img
                                 src={`${LINK}/${enemyPokemon[0].id}.gif`}
                                 alt={enemyPokemon[0].name}
@@ -123,7 +132,7 @@ const BattleBoard = () => {
                         </div>
                     </div>
                     <div className="pokemon-container">
-                        <div className={`pokemon`}>
+                        <div ref={pokemonRef} className={`pokemon`}>
                             <img
                                 src={`${LINK}/back/${pokemon[0].id}.gif`}
                                 alt={pokemon[0].name}
