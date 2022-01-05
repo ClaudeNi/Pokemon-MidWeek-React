@@ -19,6 +19,7 @@ const TeamBuilder = () => {
     const [enemyPokemonList, setEnemyPokemonList] = useState([]);
     const [choosingPlayer, setChoosingPlayer] = useState(true);
     const [text, setText] = useState("");
+    const [btnText, setBtnText] = useState("Choose Enemy's Pokemon");
     const [spinner, setSpinner] = useState(false);
 
     const inputRef = useRef();
@@ -34,7 +35,7 @@ const TeamBuilder = () => {
     });
 
     const fetchPokemon = async (input) => {
-        if (input < 650 && input > 0) {
+        if ((input < 650 && input > 0) || typeof input === "string") {
             setSpinner(true);
             try {
                 const result = await pokeApi.get(`pokemon/${input}`);
@@ -66,7 +67,6 @@ const TeamBuilder = () => {
         setSpinner(true);
         try {
             const result = await pokeApi.get(`move/${name}`);
-            console.log(result.data);
             if (choosingPlayer) {
                 const moves = [...selectedMoves];
                 if (moves.filter((move) => move.name === name)[0]) {
@@ -92,11 +92,6 @@ const TeamBuilder = () => {
         }
     };
 
-    const handleAdd = () => {
-        if (pokemonList.length < 6) {
-        }
-    };
-
     const handleFinish = () => {
         if (selectedMoves.length < 2) {
             setText("Please choose at least 2 attack moves for the Pokemon");
@@ -107,6 +102,9 @@ const TeamBuilder = () => {
             setPokemonList(newList);
             setpokemon("");
             setInputValue("");
+            setBtnText("Let's Battle!");
+        } else if (enemySelectedMoves.length < 2) {
+            setText("Please choose at least 2 attack moves for the Pokemon");
         } else {
             const newList = [...enemyPokemonList];
             newList.push(pokemon);
@@ -149,23 +147,35 @@ const TeamBuilder = () => {
                         Selected moves {displaySelectedMoves()}
                     </div>
                 </div>
-                <div>
-                    <Btn text="Add" clickHandle={handleAdd} />
-                </div>
                 {text}
-                <Btn text="Choose Enemy's Pokemon" clickHandle={handleFinish} />
+                <Btn
+                    text={btnText}
+                    clickHandle={handleFinish}
+                    className="bigger-text"
+                />
             </div>
         );
     };
 
     const displayMoves = () => {
         return pokemon.moves.map((move) => {
+            if (choosingPlayer) {
+                return (
+                    <MoveItem
+                        key={move.move.url}
+                        move={move}
+                        moveHandle={handleMoveSelect}
+                        length={selectedMoves.length}
+                        current={choosingPlayer}
+                    />
+                );
+            }
             return (
                 <MoveItem
                     key={move.move.url}
                     move={move}
                     moveHandle={handleMoveSelect}
-                    length={selectedMoves.length}
+                    length={enemySelectedMoves.length}
                     current={choosingPlayer}
                 />
             );
@@ -184,6 +194,10 @@ const TeamBuilder = () => {
                         <div className="line">
                             <span className="label">Desc: </span>
                             {move.flavor_text_entries[0].flavor_text}
+                        </div>
+                        <div className="line">
+                            <span className="label">PP: </span>
+                            {move.pp}
                         </div>
                     </div>
                 );
@@ -208,28 +222,36 @@ const TeamBuilder = () => {
     return (
         <div className="team-builder">
             {spinner ? <Spinner /> : null}
-            <span>Please choose a Pokemon from Gen 1 up to Gen 5.</span>
-            <span>
-                You can search by either their ID (1 - 649) or their name.
-            </span>
-            {choosingPlayer
-                ? "Choosing your Pokemon"
-                : "Choosing your enemy's Pokemon"}
-            <div className="search-container">
-                <input
-                    ref={inputRef}
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Input a Pokemon name or ID"
-                    className="input"
-                ></input>{" "}
-                <Btn
-                    text="Search"
-                    clickHandle={handleSearchClick}
-                    className="btn"
-                />
+            <div className="intro-text-container">
+                <span>Please choose a Pokemon from Gen 1 up to Gen 5.</span>
+                <span>
+                    You can search by either their ID (1 - 649) or their name.
+                </span>
             </div>
-            {pokemon !== "" && inputValue !== "" ? displayPokemon() : null}
+            <div className="pokemon-all-container">
+                {choosingPlayer ? (
+                    <span className="choosing">Choosing your Pokemon</span>
+                ) : (
+                    <span className="choosing">
+                        Choosing your enemy's Pokemon
+                    </span>
+                )}
+                <div className="search-container">
+                    <input
+                        ref={inputRef}
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Input a Pokemon name or ID"
+                        className="input"
+                    ></input>{" "}
+                    <Btn
+                        text="Search"
+                        clickHandle={handleSearchClick}
+                        className="btn"
+                    />
+                </div>
+                {pokemon !== "" && inputValue !== "" ? displayPokemon() : null}
+            </div>
         </div>
     );
 };

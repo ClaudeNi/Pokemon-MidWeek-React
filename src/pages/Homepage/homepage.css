@@ -1,4 +1,31 @@
 .homepage {
+    min-height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: url("../../assets/imgs/ui/main_bg.gif") center center / 100%
+        100% no-repeat;
+}
+
+.pixel {
+    image-rendering: pixelated;
+}
+
+.top-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.top-container img {
+    width: 800px;
+    margin-bottom: 5rem;
+}
+
+.credit,
+.credit a {
+    color: #fff;
 }

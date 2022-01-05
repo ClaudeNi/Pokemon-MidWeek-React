@@ -1,4 +1,52 @@
-.container {
+.bigger-text {
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+}
+
+.title-container {
+    min-height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: url("../../assets/imgs/ui/intro.gif") center center / 100% 100%
+        no-repeat;
+    image-rendering: pixelated;
+}
+
+.intro-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.intro-text {
+    margin: 0.5rem 0;
+    max-width: 50ch;
+    font-size: 1.2rem;
+}
+
+.title-bottom-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.normal-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.wip-text {
+    margin-left: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 10px;
 }
