@@ -10,6 +10,7 @@ const LINK =
     "https://raw.githubusercontent.com/Checchii/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated";
 
 const TeamBuilder = () => {
+    const [warningText, setWarningText] = useState("");
     const [inputValue, setInputValue] = useState("");
     const [pokemon, setpokemon] = useState("");
     const [selectedMoves, setSelectedMoves] = useState([]);
@@ -35,7 +36,9 @@ const TeamBuilder = () => {
     });
 
     const fetchPokemon = async (input) => {
-        if ((input < 650 && input > 0) || typeof input === "string") {
+        if (input > 650 || input < 0) {
+            setWarningText("Please input an id between 0 and 650");
+        } else if ((input < 650 && input > 0) || typeof input === "string") {
             setSpinner(true);
             try {
                 const result = await pokeApi.get(`pokemon/${input}`);
@@ -43,6 +46,8 @@ const TeamBuilder = () => {
                 setSpinner(false);
             } catch (e) {
                 console.log(e);
+                setWarningText("Invalid Pokemon Name/ID");
+                setSpinner(false);
             }
         }
     };
@@ -89,6 +94,7 @@ const TeamBuilder = () => {
             setSpinner(false);
         } catch (e) {
             console.log(e);
+            setSpinner(false);
         }
     };
 
@@ -222,6 +228,11 @@ const TeamBuilder = () => {
     return (
         <div className="team-builder">
             {spinner ? <Spinner /> : null}
+            {warningText !== "" ? (
+                <span className="intro-text-container">{warningText}</span>
+            ) : (
+                ""
+            )}
             <div className="intro-text-container">
                 <span>Please choose a Pokemon from Gen 1 up to Gen 5.</span>
                 <span>
@@ -240,7 +251,9 @@ const TeamBuilder = () => {
                     <input
                         ref={inputRef}
                         value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
+                        onChange={(e) =>
+                            setInputValue(e.target.value.toLowerCase())
+                        }
                         placeholder="Input a Pokemon name or ID"
                         className="input"
                     ></input>{" "}
