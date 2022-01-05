@@ -61,17 +61,24 @@ const TeamBuilder = () => {
     const handleMoveSelect = async (name) => {
         try {
             const result = await pokeApi.get(`move/${name}`);
-            const moves = [...selectedMoves];
-            if (moves.filter((move) => move.name === name)[0]) {
-                const index = moves.findIndex((move) => move.name === name);
-                moves.splice(index, 1);
-            } else {
-                moves.push(result.data);
-            }
 
             if (choosingPlayer) {
+                const moves = [...selectedMoves];
+                if (moves.filter((move) => move.name === name)[0]) {
+                    const index = moves.findIndex((move) => move.name === name);
+                    moves.splice(index, 1);
+                } else {
+                    moves.push(result.data);
+                }
                 setSelectedMoves(moves);
             } else {
+                const moves = [...enemySelectedMoves];
+                if (moves.filter((move) => move.name === name)[0]) {
+                    const index = moves.findIndex((move) => move.name === name);
+                    moves.splice(index, 1);
+                } else {
+                    moves.push(result.data);
+                }
                 setEnemySelectedMoves(moves);
             }
         } catch (e) {
@@ -92,6 +99,8 @@ const TeamBuilder = () => {
             const newList = [...pokemonList];
             newList.push(pokemon);
             setPokemonList(newList);
+            setpokemon("");
+            setInputValue("");
         } else {
             const newList = [...enemyPokemonList];
             newList.push(pokemon);
@@ -151,13 +160,30 @@ const TeamBuilder = () => {
                     move={move}
                     moveHandle={handleMoveSelect}
                     length={selectedMoves.length}
+                    current={choosingPlayer}
                 />
             );
         });
     };
 
     const displaySelectedMoves = () => {
-        return selectedMoves.map((move) => {
+        if (choosingPlayer) {
+            return selectedMoves.map((move) => {
+                return (
+                    <div key={move.id} className="selected-container">
+                        <div className="line">
+                            <span className="label">Name: </span>
+                            {move.name}
+                        </div>
+                        <div className="line">
+                            <span className="label">Desc: </span>
+                            {move.flavor_text_entries[0].flavor_text}
+                        </div>
+                    </div>
+                );
+            });
+        }
+        return enemySelectedMoves.map((move) => {
             return (
                 <div key={move.id} className="selected-container">
                     <div className="line">
