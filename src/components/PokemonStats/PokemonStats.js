@@ -3,7 +3,7 @@ import "./pokemonStats.css";
 
 const PokemonStats = (props) => {
     const calcStats = (stat, base, lvl) => {
-        const start = (2 * base * lvl) / 100;
+        const start = Math.floor((2 * base * lvl) / 100);
         switch (stat) {
             case "attack":
             case "defense":
@@ -17,7 +17,7 @@ const PokemonStats = (props) => {
     };
 
     const maxHP = calcStats("hp", props.initialHP, 100);
-    const [hp, setHp] = useState(maxHP);
+    const [hp, setHp] = useState(maxHP - props.damage);
     const [hpBg, setHpBg] = useState("green");
 
     useEffect(() => {

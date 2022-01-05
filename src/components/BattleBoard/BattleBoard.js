@@ -64,6 +64,7 @@ const BattleBoard = () => {
                                 pokemon={enemyPokemon}
                                 maxHP={enemyPokemon.stats.hp}
                                 initialHP={enemyPokemon.stats.hp}
+                                damage={0}
                             />
                         </div>
                         <div
@@ -71,8 +72,7 @@ const BattleBoard = () => {
                         ></div>
                     </div>
                     <div className="pokemon-container">
-                        <div className={`pokemon `}>
-                            {console.log(pokemon)}
+                        <div className={`pokemon`}>
                             <img
                                 src={pokemon.sprites.back_default}
                                 alt={pokemon.name}
@@ -84,6 +84,7 @@ const BattleBoard = () => {
                                 pokemon={pokemon}
                                 maxHP={pokemon.stats[0].base_stat}
                                 initialHP={pokemon.stats[0].base_stat}
+                                damage={0}
                             />
                         </div>
                     </div>
@@ -106,6 +107,7 @@ const BattleBoard = () => {
                                 btn2="Bag"
                                 btn3="Pokemon"
                                 btn4="Run"
+                                selected={() => {}}
                             />
                         </div>
                     </div>
