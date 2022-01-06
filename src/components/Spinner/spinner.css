@@ -11,10 +11,9 @@
 .spinner {
     height: 200px;
     width: 200px;
-    border-radius: 50%;
-    border: 10px solid #fff;
-    border-top-color: #ff0000;
     animation: spinner 0.7s linear infinite;
+    background: url("../../assets/imgs/ui/pokeball.png") center center / cover
+        no-repeat;
 }
 
 @keyframes spinner {
